@@ -11,7 +11,7 @@ CHECK_INTERVAL = 20
 COOLDOWN = 300
 
 def send_telegram(msg):
-    url = f"https://api.telegram.org/bot{BOTTOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     data = {"chat_id": CHAT_ID, "text": msg}
     try:
         requests.post(url, data=data, timeout=10)
@@ -39,13 +39,16 @@ def check_stock():
 
     return False
 
-print("Bot started...")
 
 if __name__ == "__main__":
     print("Bot started...")
     while True:
-        if check_stock():
-            send_telegram("🔥 iPhone 17 Pro Max 256GB White có hàng tại Apple Fukuoka!")
-            time.sleep(COOLDOWN)
-        else:
-            time.sleep(CHECK_INTERVAL)
+        try:
+            if check_stock():
+                send_telegram("🔥 iPhone 17 Pro Max 256GB White có hàng tại Apple Fukuoka!")
+                time.sleep(COOLDOWN)
+            else:
+                time.sleep(CHECK_INTERVAL)
+        except Exception as e:
+            print("ERROR:", e)
+            time.sleep(10)
