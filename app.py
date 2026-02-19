@@ -4,8 +4,6 @@ import os
 
 BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
-CHAT_ID = os.getenv("578173174")
-
 PART_NUMBER = "MFY84J/A"
 ZIP_CODE = "8100001"
 
