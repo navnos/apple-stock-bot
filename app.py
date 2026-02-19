@@ -2,7 +2,8 @@ import requests
 import time
 import os
 
-BOT_TOKEN = os.getenv("8475192089: AAGOCHw3KTiDYs3m_Y-V9hR75EU_H21pc4")
+BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 CHAT_ID = os.getenv("578173174")
 
 PART_NUMBER = "MFY84J/A"
