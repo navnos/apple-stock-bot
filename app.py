@@ -44,6 +44,7 @@ if __name__ == "__main__":
     print("Bot started...")
     while True:
         try:
+            print("Checking stock...")
             if check_stock():
                 send_telegram("🔥 iPhone 17 Pro Max 256GB White có hàng tại Apple Fukuoka!")
                 time.sleep(COOLDOWN)
