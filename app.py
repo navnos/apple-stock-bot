@@ -21,24 +21,34 @@ def send_telegram(msg):
 def check_stock():
     url = "https://www.apple.com/jp/shop/fulfillment-messages"
     params = {"parts.0": PART_NUMBER, "location": ZIP_CODE}
-    headers = {"User-Agent": "Mozilla/5.0"}
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/120.0.0.0 Safari/537.36",
+        "Referer": "https://www.apple.com/jp/shop/buy-iphone",
+        "Accept": "application/json"
+    }
 
     try:
         r = requests.get(url, params=params, headers=headers, timeout=10)
-        data = r.json()
 
-        print(data)  # 
+        # 👇 Debug HTTP status
+        print("Status:", r.status_code)
+
+        if r.status_code != 200:
+            print("Bad response:", r.text[:200])
+            return False
+
+        data = r.json()
 
         stores = data.get("body", {}).get("content", {}).get("pickupMessage", {}).get("stores", [])
 
         for store in stores:
-            print("Store:", store.get("storeName"))
-
-            if "Fukuoka" in store.get("storeName", ""):
+            if "福岡" in store.get("storeName", ""):
                 availability = store.get("partsAvailability", {}).get(PART_NUMBER, {})
-                print("Availability:", availability)
 
-                if availability.get("pickupAvailable") == True:
+                if availability.get("pickupAvailable"):
                     return True
 
     except Exception as e:
@@ -46,7 +56,6 @@ def check_stock():
         return False
 
     return False
-
 if __name__ == "__main__":
     print("Bot started...")
     while True:
