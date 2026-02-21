@@ -26,11 +26,13 @@ def check_stock():
     try:
         r = requests.get(url, params=params, headers=headers, timeout=10)
         data = r.json()
-
+print(data)   #
         stores = data.get("body", {}).get("content", {}).get("pickupMessage", {}).get("stores", [])
 
         for store in stores:
+            print("Store:", store.get("storeName"))  #
             if "Fukuoka" in store.get("storeName", ""):
+                print("Availability:", availability)  #
                 availability = store.get("partsAvailability", {}).get(PART_NUMBER, {})
                 if availability.get("pickupAvailable") == True:
                     return True
